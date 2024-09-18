@@ -5,7 +5,6 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import styles from "../UserModals/UserModal.module.css";
-//import { useUserContext } from "@/context/UserContext";
 
 interface UserModalProps {
   visible: boolean;
@@ -15,12 +14,12 @@ interface UserModalProps {
 }
 
 const UserModal = ({ user, visible, onHide, onSave }: UserModalProps) => {
-  //const { setRefreshState } = useUserContext();
   const [id, setId] = useState<string>("");
   const [usuario, setUsuario] = useState<string>("");
   const [estado, setEstado] = useState<"ACTIVO" | "INACTIVO" | "">("");
   const [sector, setSector] = useState<number>(0);
 
+  //UseEffect encargado de tomar los datos suponiendo que tipo de modal mostramos si el de Crear o Editar
   useEffect(() => {
     if (user) {
       setId(user.id);
@@ -35,6 +34,7 @@ const UserModal = ({ user, visible, onHide, onSave }: UserModalProps) => {
     }
   }, [user]);
 
+  //Funcion que ejecuta el envio de datos al contexto de la aplicacion al momento de confirmar la creacion o edicion de un usuario
   const handleSave = () => {
     onSave({ usuario, estado, sector, id });
     onHide();

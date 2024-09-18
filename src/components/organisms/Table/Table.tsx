@@ -11,6 +11,7 @@ import { Card } from "primereact/card";
 import { ProgressSpinner } from "primereact/progressspinner";
 
 const Table = () => {
+  //Estados y funciones provenientes del contexto
   const {
     filteredUsers,
     loading,
@@ -24,6 +25,7 @@ const Table = () => {
     setRefreshState,
   } = useUserContext();
 
+  //Funcion de borrado de usuario al momento de la confirmacion enviando los datos al servicio
   const handleDeleteUser = async (userId: string) => {
     try {
       await deleteUser(userId);
@@ -34,6 +36,7 @@ const Table = () => {
     }
   };
 
+  //Configuracion del componente ConfirmDialog para la eliminacion de usuario
   const confirmDeleteUser = (userId: string) => {
     confirmDialog({
       message: "¿Estás seguro de que deseas eliminar este usuario?",

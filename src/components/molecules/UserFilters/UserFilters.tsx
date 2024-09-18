@@ -21,6 +21,7 @@ const UserFilters = ({ setFilterIn }: UserFiltersProps) => {
     { label: "INACTIVO", value: "INACTIVO" },
   ];
 
+  //Funcion de limpieza de filtros
   const handleClear = () => {
     setSearch("");
     setEstado("");
@@ -28,6 +29,7 @@ const UserFilters = ({ setFilterIn }: UserFiltersProps) => {
     setFilterIn(true);
   };
 
+  //Funcion que ejecuta la aplicacion de los filtros por parte del usuario
   const handleFilter = async ({
     search,
     estado,
@@ -50,7 +52,8 @@ const UserFilters = ({ setFilterIn }: UserFiltersProps) => {
       setLoading(false);
     }
   };
-
+ 
+  //Funcion que toma los datos ingresados a los filtros para luego hacer la peticion al servicio con dichos filtros
   const handleApplyFilter = () => {
     handleFilter({ search, estado });
   };
