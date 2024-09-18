@@ -1,12 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createUser, updateUser } from "@/services/userService";
-
-interface User {
-  id: number;
-  usuario: string;
-  estado: "ACTIVO" | "INACTIVO";
-  sector: number;
-}
+import { createUser, updateUser, User } from "@/services/userService";
 
 interface UserContextProps {
   users: User[];
@@ -19,6 +12,8 @@ interface UserContextProps {
   setSelectedUser: (user: User | null) => void;
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
+  refreshState: boolean;
+  setRefreshState: (refreshState: boolean) => void;
   handleSaveUser: (user: Omit<User, "id">) => Promise<void>;
   openModal: (user?: User) => void;
   closeModal: () => void;
@@ -38,6 +33,7 @@ export const UserProvider = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [refreshState, setRefreshState] = useState<boolean>(false)
 
   const handleSaveUser = async (user: Omit<User, "id">) => {
     const userWithCorrectType = {
@@ -47,7 +43,7 @@ export const UserProvider = ({
 
     if (selectedUser) {
       const updatedUser = await updateUser(
-        selectedUser.id,
+        Number(selectedUser.id),
         userWithCorrectType
       );
       setUsers(users.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
@@ -83,6 +79,8 @@ export const UserProvider = ({
         handleSaveUser,
         closeModal,
         openModal,
+        refreshState,
+        setRefreshState
       }}
     >
       {children}

@@ -38,14 +38,6 @@ a {
   text-decoration: none;
 }
 
-@layer prime-components {
-  .custom-datatable {
-    border-radius: 20px;
-    margin-left: 30px;
-    width: 95%;
-  }
-}
-
 /* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

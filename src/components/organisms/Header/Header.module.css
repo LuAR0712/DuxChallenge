@@ -9,6 +9,7 @@
 .buttonModal {
   display: flex;
   background-color: var(--duxColor);
+  border-color: var(--duxColor);
   font-family: 'Poppins', Arial, Helvetica, sans-serif;
   border-radius: 6px;
   padding: 5px 10px;

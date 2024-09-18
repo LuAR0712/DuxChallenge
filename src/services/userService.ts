@@ -2,9 +2,9 @@ const API_URL = "https://staging.duxsoftware.com.ar/api/personal";
 const SECTOR = 4000;
 
 export interface User {
-  id: number;
+  id: string;
   usuario: string;
-  estado: "ACTIVO" | "INACTIVO";
+  estado: "ACTIVO" | "INACTIVO" | "";
   sector: number;
 }
 
@@ -16,7 +16,7 @@ interface FetchUserParams {
 }
 
 export const getUsers = async ({
-  limit = 20,
+  limit = 50,
   page = 1,
   search = "",
   estado = "",
@@ -80,7 +80,7 @@ export const updateUser = async (
   }
 };
 
-export const deleteUser = async (id: number): Promise<void> => {
+export const deleteUser = async (id: string): Promise<void> => {
   try {
     const response = await fetch(`${API_URL}/${id}`, {
       method: "DELETE",

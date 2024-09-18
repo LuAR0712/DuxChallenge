@@ -6,6 +6,7 @@ import { Column } from "primereact/column";
 import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import { DataTable } from "primereact/datatable";
 import React from "react";
+import styles from "../Table/Table.module.css";
 
 const Table = () => {
   const {
@@ -17,25 +18,35 @@ const Table = () => {
     openModal,
     closeModal,
     setUsers,
-    users
+    users,
+    setRefreshState,
   } = useUserContext();
 
-  const handleDeleteUser = async (userId: number) => {
+  const handleDeleteUser = async (userId: string) => {
     try {
       await deleteUser(userId);
       setUsers(users.filter((user) => user.id !== userId));
+      setRefreshState(true);
     } catch (error) {
       console.log("Error eliminando el usuario", error);
     }
   };
 
-  const confirmDeleteUser = (userId: number) => {
+  const confirmDeleteUser = (userId: string) => {
     confirmDialog({
       message: "¿Estás seguro de que deseas eliminar este usuario?",
       header: "Confirmar eliminación",
       icon: "pi pi-exclamation-triangle",
       accept: () => handleDeleteUser(userId),
       reject: () => console.log("Se cancelo la eliminacion"),
+      headerClassName: styles.confirmDialogHeader,
+      contentClassName: styles.confirmDialogContent,
+      acceptClassName: styles.confirmDialogAccept,
+      rejectClassName: styles.confirmDialogReject,
+      rejectLabel: "Cancelar",
+      acceptLabel: "Confirmar",
+      acceptIcon: "pi pi-check",
+      rejectIcon: "pi pi-times",
     });
   };
 
@@ -47,27 +58,46 @@ const Table = () => {
         <DataTable
           value={filteredUsers}
           stripedRows
-          style={{ width: "93%", marginLeft: "30px", marginBottom: "20px" }}
+          size="large"
+          className={styles.tableStyles}
+          removableSort
+          paginator
+          rows={5}
+          rowsPerPageOptions={[5, 10, 25]}
         >
-          <Column field="usuario" header="Usuario" />
-          <Column field="estado" header="Estado" />
-          <Column field="sector" header="Sector" />
+          <Column
+            field="usuario"
+            header="Usuario"
+            headerClassName={styles.tableHeader}
+            sortable
+          />
+          <Column field="estado" header="Estado" sortable />
+          <Column field="sector" header="Sector" sortable />
           <Column
             body={(rowData) => (
               <>
                 <Button
-                  label="Editar"
                   icon="pi pi-pencil"
                   onClick={() => openModal(rowData)}
-                  style={{ padding: "3px" }}
-                  rounded
+                  className={styles.editButton}
+                  tooltip="Editar usuario"
+                  tooltipOptions={{
+                    position: "bottom",
+                    mouseTrack: true,
+                    mouseTrackTop: 15,
+                  }}
                 />
                 <Button
-                  label="Borrar"
                   icon="pi pi-trash"
                   onClick={() => confirmDeleteUser(rowData.id)}
                   style={{ marginLeft: "15px", padding: "3px" }}
-                  rounded
+                  className={styles.deleteButton}
+                  tooltip="Borrar usuario"
+                  tooltipOptions={{
+                    position: "bottom",
+                    mouseTrack: true,
+                    mouseTrackTop: 15,
+                  }}
                 />
               </>
             )}
@@ -80,7 +110,7 @@ const Table = () => {
         onSave={handleSaveUser}
         user={selectedUser || undefined}
       />
-      <ConfirmDialog />
+      <ConfirmDialog className={styles.confirmDialog} />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { getUsers } from "@/services/userService";
+import { getUsers, User } from "@/services/userService";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import UserFilters from "@/components/molecules/UserFilters/UserFilters";
@@ -6,20 +6,19 @@ import Header from "@/components/organisms/Header/Header";
 import { useUserContext } from "@/context/UserContext";
 import Table from "@/components/organisms/Table/Table";
 
-interface User {
-  id: number;
-  usuario: string;
-  estado: "ACTIVO" | "INACTIVO";
-  sector: number;
-}
-
 interface UserPageProps {
   initialUsers: User[];
 }
 
 const UserPage = ({ initialUsers }: UserPageProps) => {
-  const { setLoading, setFilteredUsers, setUsers, openModal } =
-    useUserContext();
+  const {
+    setLoading,
+    setFilteredUsers,
+    setUsers,
+    openModal,
+    refreshState,
+    setRefreshState,
+  } = useUserContext();
   const [filterIn, setFilterIn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -29,47 +28,25 @@ const UserPage = ({ initialUsers }: UserPageProps) => {
   }, [initialUsers]);
 
   useEffect(() => {
-    if (filterIn) {
+    if (filterIn || refreshState) {
       (async () => {
         setLoading(true);
         const filtered = await getUsers({
           page: 1,
-          limit: 20,
+          limit: 50,
         });
         setFilteredUsers(filtered);
         setLoading(false);
         setFilterIn(false);
+        setRefreshState(false);
       })();
     }
-  }, [filterIn]);
-
-  const handleFilter = async ({
-    search,
-    estado,
-  }: {
-    search: string;
-    estado: "ACTIVO" | "INACTIVO" | "";
-  }) => {
-    try {
-      setLoading(true);
-      const filtered = await getUsers({
-        limit: 20,
-        page: 1,
-        search: search || "",
-        estado: estado || "",
-      });
-      setFilteredUsers(filtered);
-      setLoading(false);
-    } catch (error) {
-      console.log("Error aplicando filtros", error);
-      setLoading(false);
-    }
-  };
+  }, [filterIn, refreshState]);
 
   return (
     <div>
       <Header modalAddUser={() => openModal()} />
-      <UserFilters onFilter={handleFilter} setFilterIn={setFilterIn} />
+      <UserFilters setFilterIn={setFilterIn} />
       <Table />
     </div>
   );

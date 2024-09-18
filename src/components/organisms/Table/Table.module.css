@@ -1,0 +1,58 @@
+.tableStyles {
+  width: 90%;
+  margin-bottom: 20px;
+  border-bottom: 6px;
+}
+
+.tableHeader{
+    padding: 8px;
+}
+
+.editButton {
+  background-color: var(--duxColor);
+  border-color: var(--duxColor);
+  padding: 3px;
+}
+
+.deleteButton {
+  margin-left: 15px;
+  background-color: var(--duxColor);
+  border-color: var(--duxColor);
+  padding: 3px;
+}
+
+.confirmDialog {
+  width: 450px;
+  height: 150px;
+}
+
+.confirmDialogHeader {
+  background-color: var(--duxColor);
+  color: white;
+  padding: 5px 10px;
+}
+
+.confirmDialogContent {
+  padding: 15px;
+  gap: 10px;
+}
+
+.confirmDialogAccept {
+  padding: 3px 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 20px;
+  background-color: var(--duxColor);
+  border-color: var(--duxColor);
+  gap: 5px;
+}
+
+.confirmDialogReject {
+  padding: 3px 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  background-color: white;
+  color: var(--duxColor);
+  border-color: var(--duxColor);
+  gap: 5px;
+}

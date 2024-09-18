@@ -3,16 +3,15 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import styles from "../UserFilters/filters.module.css";
+import { getUsers } from "@/services/userService";
+import { useUserContext } from "@/context/UserContext";
 
 interface UserFiltersProps {
-  onFilter: (filters: {
-    search: string;
-    estado: "ACTIVO" | "INACTIVO" | "";
-  }) => void;
   setFilterIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserFilters = ({ onFilter, setFilterIn }: UserFiltersProps) => {
+const UserFilters = ({ setFilterIn }: UserFiltersProps) => {
+  const { setLoading, setFilteredUsers } = useUserContext();
   const [search, setSearch] = useState<string>("");
   const [estado, setEstado] = useState<"ACTIVO" | "INACTIVO" | "">("");
 
@@ -21,14 +20,37 @@ const UserFilters = ({ onFilter, setFilterIn }: UserFiltersProps) => {
     { label: "INACTIVO", value: "INACTIVO" },
   ];
 
-  const handleFilter = () => {
-    onFilter({ search, estado });
-  };
-
   const handleClear = () => {
     setSearch("");
     setEstado("");
     setFilterIn(true);
+  };
+
+  const handleFilter = async ({
+    search,
+    estado,
+  }: {
+    search: string;
+    estado: "ACTIVO" | "INACTIVO" | "";
+  }) => {
+    try {
+      setLoading(true);
+      const filtered = await getUsers({
+        limit: 20,
+        page: 1,
+        search: search || "",
+        estado: estado || "",
+      });
+      setFilteredUsers(filtered);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error aplicando filtros", error);
+      setLoading(false);
+    }
+  };
+
+  const handleApplyFilter = () => {
+    handleFilter({ search, estado });
   };
 
   return (
@@ -59,7 +81,7 @@ const UserFilters = ({ onFilter, setFilterIn }: UserFiltersProps) => {
       <div>
         <Button
           icon="pi pi-filter"
-          onClick={handleFilter}
+          onClick={handleApplyFilter}
           label="Aplicar Filtros"
           className={styles.buttonFilter}
         />
@@ -68,7 +90,11 @@ const UserFilters = ({ onFilter, setFilterIn }: UserFiltersProps) => {
           onClick={handleClear}
           className={styles.buttonClear}
           tooltip="Borrar filtros"
-          tooltipOptions={{ position: 'bottom', mouseTrack: true, mouseTrackTop: 15 }}
+          tooltipOptions={{
+            position: "bottom",
+            mouseTrack: true,
+            mouseTrackTop: 15,
+          }}
         />
       </div>
     </div>
