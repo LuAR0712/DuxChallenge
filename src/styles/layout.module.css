@@ -1,0 +1,10 @@
+.layoutContainer{
+    margin-left: 50px;
+    z-index: 1;
+}
+
+.footerContainer{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+}

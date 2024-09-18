@@ -1,0 +1,16 @@
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  width: 98%;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.buttonModal {
+  display: flex;
+  background-color: var(--duxColor);
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  border-radius: 6px;
+  padding: 5px 10px;
+  gap: 10px;
+}

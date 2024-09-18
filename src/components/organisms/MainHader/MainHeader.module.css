@@ -1,0 +1,18 @@
+.mainHeaderContainer {
+  background-color: var(--duxColor);
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-left: 10px;
+}
+
+.buttonConfig {
+  background-color: var(--duxColor);
+  color: #ffffff;
+}

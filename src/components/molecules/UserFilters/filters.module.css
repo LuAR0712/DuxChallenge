@@ -1,0 +1,54 @@
+.filterContainer {
+  display: flex;
+  margin-bottom: 20px;
+  width: 98%;
+}
+
+.inputContainer {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.dropdownContainer{
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.iconInput{
+  border-color: #64748b;
+  background-color: var(--duxColor);
+  padding: 4px 10px;
+  border-radius: 6px 0px 0px 6px;
+  color: #FFFFFF;
+}
+
+.inputText {
+  padding: 5px 10px;
+  border-radius: 0px 6px 6px 0px;
+  width: 100%;
+  display: flex;
+}
+
+.dropdown {
+  padding: 5px 10px;
+  border-radius: 0px 6px 6px 0px;
+  margin-right: 10px;
+}
+
+.buttonFilter {
+  background-color: #64748b;
+  padding: 5px 10px;
+  border-radius: 6px;
+  gap: 10px;
+  border-color: #64748b;
+}
+
+.buttonClear {
+  margin-left: 10px;
+  background-color: #64748b;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border-color: #64748b;
+}
