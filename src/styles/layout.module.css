@@ -1,6 +1,6 @@
 .layoutContainer{
-    margin-left: 50px;
-    z-index: 1;
+    margin-left: 90px;
+    z-index: 999;
     height: 100%;
 }
 

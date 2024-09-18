@@ -14,6 +14,7 @@ const UserFilters = ({ setFilterIn }: UserFiltersProps) => {
   const { setLoading, setFilteredUsers } = useUserContext();
   const [search, setSearch] = useState<string>("");
   const [estado, setEstado] = useState<"ACTIVO" | "INACTIVO" | "">("");
+  const [sector, setSector] = useState<number | null>(null);
 
   const estados = [
     { label: "ACTIVO", value: "ACTIVO" },
@@ -23,6 +24,7 @@ const UserFilters = ({ setFilterIn }: UserFiltersProps) => {
   const handleClear = () => {
     setSearch("");
     setEstado("");
+    setSector(null);
     setFilterIn(true);
   };
 
@@ -75,6 +77,18 @@ const UserFilters = ({ setFilterIn }: UserFiltersProps) => {
           options={estados}
           onChange={(e) => setEstado(e.value)}
           placeholder="Filtrar por estado"
+          className={styles.dropdown}
+        />
+      </div>
+      <div className={styles.dropdownContainer}>
+        <span className={styles.iconInput}>
+          <i className="pi pi-search"></i>
+        </span>
+        <Dropdown
+          value={sector}
+          options={["4000", ""]}
+          onChange={(e) => setSector(e.value)}
+          placeholder="Filtrar por sector"
           className={styles.dropdown}
         />
       </div>
