@@ -5,17 +5,17 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import styles from "../UserModals/UserModal.module.css";
-import { useUserContext } from "@/context/UserContext";
+//import { useUserContext } from "@/context/UserContext";
 
 interface UserModalProps {
   visible: boolean;
   onHide: () => void;
-  onSave: (user: Omit<User, "id">) => void;
+  onSave: (user: User) => void;
   user?: User;
 }
 
 const UserModal = ({ user, visible, onHide, onSave }: UserModalProps) => {
-  const { setRefreshState } = useUserContext();
+  //const { setRefreshState } = useUserContext();
   const [id, setId] = useState<string>("");
   const [usuario, setUsuario] = useState<string>("");
   const [estado, setEstado] = useState<"ACTIVO" | "INACTIVO" | "">("");
@@ -36,8 +36,7 @@ const UserModal = ({ user, visible, onHide, onSave }: UserModalProps) => {
   }, [user]);
 
   const handleSave = () => {
-    setRefreshState(true);
-    onSave({ usuario, estado, sector });
+    onSave({ usuario, estado, sector, id });
     onHide();
   };
 

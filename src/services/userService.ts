@@ -16,7 +16,7 @@ interface FetchUserParams {
 }
 
 export const getUsers = async ({
-  limit = 50,
+  limit = 0,
   page = 1,
   search = "",
   estado = "",
@@ -41,7 +41,7 @@ export const getUsers = async ({
   }
 };
 
-export const createUser = async (user: Omit<User, "id">): Promise<User> => {
+export const createUser = async (user: User): Promise<User> => {
   try {
     const response = await fetch(API_URL, {
       method: "POST",
@@ -60,7 +60,7 @@ export const createUser = async (user: Omit<User, "id">): Promise<User> => {
 };
 
 export const updateUser = async (
-  id: number,
+  id: string,
   user: Partial<User>
 ): Promise<User> => {
   try {

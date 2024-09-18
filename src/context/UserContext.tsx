@@ -14,7 +14,7 @@ interface UserContextProps {
   setIsModalOpen: (open: boolean) => void;
   refreshState: boolean;
   setRefreshState: (refreshState: boolean) => void;
-  handleSaveUser: (user: Omit<User, "id">) => Promise<void>;
+  handleSaveUser: (user: User) => Promise<void>;
   openModal: (user?: User) => void;
   closeModal: () => void;
 }
@@ -33,23 +33,28 @@ export const UserProvider = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [refreshState, setRefreshState] = useState<boolean>(false)
+  const [refreshState, setRefreshState] = useState<boolean>(false);
 
-  const handleSaveUser = async (user: Omit<User, "id">) => {
+  const handleSaveUser = async (user: User) => {
     const userWithCorrectType = {
       ...user,
       estado: user.estado as "ACTIVO" | "INACTIVO",
+      id: user.id,
     };
 
     if (selectedUser) {
       const updatedUser = await updateUser(
-        Number(selectedUser.id),
+        selectedUser.id,
         userWithCorrectType
       );
-      setUsers(users.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
+      setUsers((prevUsers) =>
+        prevUsers.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+      );
+      setRefreshState(true);
     } else {
       const newUser = await createUser(userWithCorrectType);
       setUsers([...users, newUser]);
+      setRefreshState(true);
     }
   };
 
@@ -80,7 +85,7 @@ export const UserProvider = ({
         closeModal,
         openModal,
         refreshState,
-        setRefreshState
+        setRefreshState,
       }}
     >
       {children}

@@ -1,11 +1,20 @@
-.tableStyles {
-  width: 90%;
-  margin-bottom: 20px;
-  border-bottom: 6px;
+.tableContainer {
+  width: 98%;
 }
 
-.tableHeader{
-    padding: 8px;
+.tableStyles {
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: 6px;
+  padding: 10px;
+}
+
+.tableHeader {
+  padding: 10px;
+}
+
+.tableBody {
+  padding: 5px;
 }
 
 .editButton {
@@ -55,4 +64,13 @@
   color: var(--duxColor);
   border-color: var(--duxColor);
   gap: 5px;
+}
+
+.loadingView{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 20vh;
+  align-items: center;
+  flex-direction: column;
 }

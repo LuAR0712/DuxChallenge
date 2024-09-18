@@ -7,6 +7,8 @@ import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 import { DataTable } from "primereact/datatable";
 import React from "react";
 import styles from "../Table/Table.module.css";
+import { Card } from "primereact/card";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 const Table = () => {
   const {
@@ -53,56 +55,68 @@ const Table = () => {
   return (
     <>
       {loading ? (
-        <p>Cargando usuarios...</p>
+        <div className={styles.loadingView}>
+          <ProgressSpinner
+            style={{ width: "50px", height: "50px", color: "#0763E7" }}
+            strokeWidth="8"
+            fill="var(--surface-ground)"
+            animationDuration=".5s"
+          />
+          <label>Cargando Datos...</label>
+        </div>
       ) : (
-        <DataTable
-          value={filteredUsers}
-          stripedRows
-          size="large"
-          className={styles.tableStyles}
-          removableSort
-          paginator
-          rows={5}
-          rowsPerPageOptions={[5, 10, 25]}
-        >
-          <Column
-            field="usuario"
-            header="Usuario"
-            headerClassName={styles.tableHeader}
-            sortable
-          />
-          <Column field="estado" header="Estado" sortable />
-          <Column field="sector" header="Sector" sortable />
-          <Column
-            body={(rowData) => (
-              <>
-                <Button
-                  icon="pi pi-pencil"
-                  onClick={() => openModal(rowData)}
-                  className={styles.editButton}
-                  tooltip="Editar usuario"
-                  tooltipOptions={{
-                    position: "bottom",
-                    mouseTrack: true,
-                    mouseTrackTop: 15,
-                  }}
-                />
-                <Button
-                  icon="pi pi-trash"
-                  onClick={() => confirmDeleteUser(rowData.id)}
-                  style={{ marginLeft: "15px", padding: "3px" }}
-                  className={styles.deleteButton}
-                  tooltip="Borrar usuario"
-                  tooltipOptions={{
-                    position: "bottom",
-                    mouseTrack: true,
-                    mouseTrackTop: 15,
-                  }}
-                />
-              </>
-            )}
-          />
-        </DataTable>
+        <Card className={styles.tableContainer}>
+          <DataTable
+            value={filteredUsers}
+            stripedRows
+            size="large"
+            className={styles.tableStyles}
+            removableSort
+            paginator
+            rows={10}
+            rowsPerPageOptions={[5, 10, 25]}
+          >
+            <Column field="id" header="Id" sortable />
+            <Column
+              field="usuario"
+              header="Usuario"
+              headerClassName={styles.tableHeader}
+              bodyClassName={styles.tableBody}
+              sortable
+            />
+            <Column field="estado" header="Estado" sortable />
+            <Column field="sector" header="Sector" sortable />
+            <Column
+              body={(rowData) => (
+                <>
+                  <Button
+                    icon="pi pi-pencil"
+                    onClick={() => openModal(rowData)}
+                    className={styles.editButton}
+                    tooltip="Editar usuario"
+                    tooltipOptions={{
+                      position: "bottom",
+                      mouseTrack: true,
+                      mouseTrackTop: 15,
+                    }}
+                  />
+                  <Button
+                    icon="pi pi-trash"
+                    onClick={() => confirmDeleteUser(rowData.id)}
+                    style={{ marginLeft: "15px", padding: "3px" }}
+                    className={styles.deleteButton}
+                    tooltip="Borrar usuario"
+                    tooltipOptions={{
+                      position: "bottom",
+                      mouseTrack: true,
+                      mouseTrackTop: 15,
+                    }}
+                  />
+                </>
+              )}
+            />
+          </DataTable>
+        </Card>
       )}
       <UserModal
         visible={isModalOpen}

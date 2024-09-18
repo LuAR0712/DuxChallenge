@@ -82,8 +82,13 @@ const UserFilters = ({ setFilterIn }: UserFiltersProps) => {
         <Button
           icon="pi pi-filter"
           onClick={handleApplyFilter}
-          label="Aplicar Filtros"
           className={styles.buttonFilter}
+          tooltip="Aplicar filtros"
+          tooltipOptions={{
+            position: "bottom",
+            mouseTrack: true,
+            mouseTrackTop: 15,
+          }}
         />
         <Button
           icon="pi pi-trash"
